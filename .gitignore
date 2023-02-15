@@ -1,0 +1,11 @@
+.idea
+.venv
+.west
+bootloader/
+build/
+cmake-build-debug
+modules/
+pigweed/
+zephyr/
+tools/
+

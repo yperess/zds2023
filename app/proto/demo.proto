@@ -1,0 +1,31 @@
+// Copyright (c) Google LLC
+// SPDX-License-Identifier: Apache-2.0
+syntax = "proto3";
+
+package rpc_demo;
+
+enum Status {
+  SUCCESS = 0;
+  FAIL = 1;
+}
+
+message SetValueRequest {
+  uint32 value = 1;
+}
+
+message SetValueResponse {
+  Status status = 1;
+}
+
+message GetValueRequest {
+}
+
+message GetValueResponse {
+  Status status = 1;
+  uint32 value = 2;
+}
+
+service DemoService {
+  rpc SetValue(SetValueRequest) returns (SetValueResponse) {}
+  rpc GetValue(GetValueRequest) returns (GetValueResponse) {}
+}

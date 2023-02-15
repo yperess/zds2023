@@ -1,0 +1,23 @@
+# Copyright (c) 2023 Google LLC
+# SPDX-License-Identifier: Apache-2.0
+
+menu "Zephyr"
+source "Kconfig.zephyr"
+endmenu
+
+module = APP
+module-str = APP
+source "subsys/logging/Kconfig.template.log_config"
+
+choice LOCALITY
+  prompt "Locality of the service"
+  default LOCALITY_RPC
+
+config LOCALITY_RPC
+  bool "Remote procedure call"
+
+config LOCALITY_LPC
+  bool "Local procedure call"
+
+endchoice
+
