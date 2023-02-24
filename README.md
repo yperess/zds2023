@@ -46,7 +46,7 @@ Install node:
 
 Run the server:
 ```bash
-$ cd pigweed/pw_web/webconsole
-$ npm install
+$ cd webconsole
+$ npm install --force
 $ npm run dev
 ```
