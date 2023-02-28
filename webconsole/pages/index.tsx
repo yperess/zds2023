@@ -24,7 +24,7 @@ import {useState} from 'react';
 type WebSerialTransport = WebSerial.WebSerialTransport
 
 const Home: NextPage = () => {
-  const [device, setDevice] = useState<Device | undefined>(undefined);
+  const [device, setDevice] = useState<WebSerialTransport | undefined>(undefined);
   const [tokenDB, setTokenDB] = useState("");
   return (
     <div className={styles.container}>
