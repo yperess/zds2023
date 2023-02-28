@@ -16,20 +16,18 @@ import Button from '@mui/material/Button';
 import {Alert} from '@mui/material';
 import {Device, WebSerial} from "pigweedjs";
 import {useState} from 'react';
-import DeviceFactory from "../common/device";
-type WebSerialTransport = WebSerial.WebSerialTransport
 
 interface LogProps {
-  onConnection: (device: Device) => void
+  onConnection: (transport: WebSerial.WebSerialTransport) => void
 }
 
 export default function BtnConnect({onConnection}: LogProps) {
   const [connected, setConnected] = useState(false);
   if (connected) return (<Alert severity="success">Connected!</Alert>)
   return (<Button onClick={async () => {
-    const device = await DeviceFactory();
-    await device.connect();
+    const transport = new WebSerial.WebSerialTransport();
+    await transport.connect();
     setConnected(true);
-    onConnection(device);
+    onConnection(transport);
   }} variant="contained">Connect</Button>)
 }
