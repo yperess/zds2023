@@ -46,7 +46,7 @@ export default function BtnUploadDB({onUpload}: Props) {
         onChange={async e => {
           const tokenCsv = await readFile(e.target.files![0]);
           try {
-            testTokenDB(tokenCsv);
+            //testTokenDB(tokenCsv);
             onUpload(tokenCsv);
             setUploaded(true);
             setError("");
