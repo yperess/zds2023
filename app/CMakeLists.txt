@@ -30,6 +30,25 @@ target_sources(app
     src/main.cc
 )
 
+# Add custom logic to generate database.bin
+# The application expects it to be in the binary dir.
+add_custom_target(database_binary
+DEPENDS
+  ${CMAKE_BINARY_DIR}/database.csv
+)
+add_custom_command(
+  OUTPUT ${CMAKE_BINARY_DIR}/database.csv
+  COMMAND
+  ${PYTHON_EXECUTABLE}
+  $ENV{PW_ROOT}/pw_tokenizer/py/pw_tokenizer/database.py
+  create
+  --type csv
+  -d ${CMAKE_BINARY_DIR}/database.csv
+  ${CMAKE_BINARY_DIR}/zephyr/zephyr_pre0.elf
+  DEPENDS zephyr_pre0
+)
+add_dependencies(${logical_target_for_zephyr_elf} database_binary)
+
 #add_subdirectory(service)
 #add_subdirectory_ifdef(CONFIG_LOCALITY_LPC local)
 #add_subdirectory_ifdef(CONFIG_LOCALITY_RPC remote)
