@@ -18,6 +18,7 @@ import {AutoSizer, Table, Column} from 'react-virtualized';
 import {listenToDefaultLogService} from "../common/logService";
 import 'react-virtualized/styles.css';
 import styles from "../styles/log.module.css";
+import StreamParser from "../common/streamParser";
 
 type Detokenizer = pw_tokenizer.Detokenizer;
 
@@ -78,13 +79,12 @@ export default function Log({device, tokenDB}: LogProps) {
     );
   }
 
-  const processFrame = (frame: Uint8Array) => {
+  const processFrame = (decodedFrame: string) => {
     if (detokenizer) {
-      const detokenized = detokenizer.detokenizeUint8Array(frame);
+      const detokenized = detokenizer.detokenizeBase64String(decodedFrame);
       setLogs(oldLogs => [...oldLogs, parseLogMsg(detokenized)]);
     } else {
-      const decoded = new TextDecoder().decode(frame);
-      setLogs(oldLogs => [...oldLogs, parseLogMsg(decoded)]);
+      setLogs(oldLogs => [...oldLogs, parseLogMsg(decodedFrame)]);
     }
     setTimeout(() => {
       logTable.current!.scrollToRow(logs.length - 1);
@@ -95,9 +95,10 @@ export default function Log({device, tokenDB}: LogProps) {
 
   useEffect(() => {
     if (device) {
+      let streamParser = new StreamParser((str) => processFrame(str));
       let cleanupFn: () => void;
       device.chunks.subscribe((item: Uint8Array) => {
-        processFrame(item);
+        streamParser.read(item);
       });
       // listenToDefaultLogService(device, processFrame).then((unsub) => cleanupFn = unsub);
       return () => {
