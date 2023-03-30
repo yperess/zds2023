@@ -89,8 +89,6 @@ export default function Log({device, tokenDB}: LogProps) {
     setTimeout(() => {
       logTable.current!.scrollToRow(logs.length - 1);
     }, 100);
-    window.bucket = window.bucket || [];
-    window.bucket.push(new TextDecoder().decode(frame));
   }
 
   useEffect(() => {

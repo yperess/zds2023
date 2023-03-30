@@ -49,9 +49,9 @@ const Home: NextPage = () => {
           <div>
             <Log device={device} tokenDB={tokenDB}></Log>
           </div>
-          <div>
-            <Repl device={device}></Repl>
-          </div>
+          {/*<div>*/}
+          {/*  <Repl device={undefined}></Repl>*/}
+          {/*</div>*/}
         </div>
       </main>
     </div>
