@@ -20,7 +20,7 @@
     "codemirror": "^6.0.1",
     "next": "12.2.3",
     "object-path": "^0.11.8",
-    "pigweedjs": "latest",
+    "pigweedjs": "file:../pigweed",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",

@@ -59,12 +59,12 @@
   &>div {
     flex-grow: 1;
     padding: 1rem;
-    max-width: 50vw;
+    max-width: 100vw;
   }
 
-  &>div:first-child {
-    border-right: 1px solid #414141;
-  }
+  //&>div:first-child {
+  //  border-right: 1px solid #414141;
+  //}
 }
 
 @media (max-width: 600px) {

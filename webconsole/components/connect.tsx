@@ -17,13 +17,17 @@ import {Alert} from '@mui/material';
 import {Device, WebSerial} from "pigweedjs";
 import {useState} from 'react';
 
+type OnConnectionCb = (transport: WebSerial.WebSerialTransport) => void;
+
 interface LogProps {
-  onConnection: (transport: WebSerial.WebSerialTransport) => void
+  onConnection: OnConnectionCb
 }
 
 export default function BtnConnect({onConnection}: LogProps) {
   const [connected, setConnected] = useState(false);
-  if (connected) return (<Alert severity="success">Connected!</Alert>)
+  if (connected) {
+    return (<Alert severity="success">Connected!</Alert>);
+  }
   return (<Button onClick={async () => {
     const transport = new WebSerial.WebSerialTransport();
     await transport.connect();

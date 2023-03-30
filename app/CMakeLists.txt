@@ -42,6 +42,7 @@ add_custom_command(
   ${PYTHON_EXECUTABLE}
   $ENV{PW_ROOT}/pw_tokenizer/py/pw_tokenizer/database.py
   create
+  --force
   --type csv
   -d ${CMAKE_BINARY_DIR}/database.csv
   ${CMAKE_BINARY_DIR}/zephyr/zephyr_pre0.elf
