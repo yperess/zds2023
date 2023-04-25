@@ -23,8 +23,10 @@ import StreamParser from "../common/streamParser";
 type Detokenizer = pw_tokenizer.Detokenizer;
 
 interface LogProps {
-  device: WebSerial.WebSerialTransport | undefined,
-  tokenDB: string | undefined
+  device: Device | undefined,
+  transport: WebSerial.WebSerialTransport | undefined,
+  tokenDB: string | undefined,
+  mode: string
 }
 
 interface LogEntry {
@@ -67,7 +69,7 @@ const keyToDisplayName: {[key: string]: string} = {
   "file": "File"
 }
 
-export default function Log({device, tokenDB}: LogProps) {
+export default function Log({device, transport, tokenDB, mode}: LogProps) {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [detokenizer, setDetokenizer] = useState<Detokenizer | null>(null);
   const logTable = useRef<Table | null>(null);
@@ -91,19 +93,46 @@ export default function Log({device, tokenDB}: LogProps) {
     }, 100);
   }
 
+  const processFrameUint8 = (frame: Uint8Array) => {
+    if (detokenizer) {
+      const detokenized = detokenizer.detokenizeUint8Array(frame);
+      setLogs(oldLogs => [...oldLogs, parseLogMsg(detokenized)]);
+    }
+    else {
+      const decoded = new TextDecoder().decode(frame);
+      setLogs(oldLogs => [...oldLogs, parseLogMsg(decoded)]);
+    }
+    setTimeout(() => {
+      logTable.current!.scrollToRow(logs.length - 1);
+    }, 100);
+  }
+
   useEffect(() => {
-    if (device) {
-      let streamParser = new StreamParser((str) => processFrame(str));
+    if (device && transport) {
       let cleanupFn: () => void;
-      device.chunks.subscribe((item: Uint8Array) => {
-        streamParser.read(item);
-      });
-      // listenToDefaultLogService(device, processFrame).then((unsub) => cleanupFn = unsub);
+      if (mode === "raw") {
+        const subscription = transport.chunks.subscribe((item: Uint8Array) => {
+          setLogs(oldLogs =>
+            [...oldLogs, parseLogMsg(Buffer.from(item.buffer).toString())]);
+        });
+        cleanupFn = () => subscription.unsubscribe();
+      }
+      else if (mode === "stream") {
+        let streamParser = new StreamParser((str) => processFrame(str));
+        const subscription = transport.chunks.subscribe((item: Uint8Array) => {
+          streamParser.read(item);
+        });
+        cleanupFn = () => subscription.unsubscribe();
+      }
+      else if (mode === "rpc") {
+        listenToDefaultLogService(device, processFrameUint8).then((unsub) => cleanupFn = unsub);
+      }
+
       return () => {
         if (cleanupFn) cleanupFn();
       }
     }
-  }, [device, detokenizer]);
+  }, [device, transport, detokenizer, mode]);
 
   useEffect(() => {
     if (tokenDB && tokenDB.length > 0) {

@@ -14,6 +14,7 @@
 
 import {Device} from "pigweedjs";
 import {createDefaultProtoCollection} from "./protos";
+import {WebSerial} from "pigweedjs";
 
 /**
  * Returns an instance of Device, ensures there is only one Device in
@@ -21,10 +22,10 @@ import {createDefaultProtoCollection} from "./protos";
  *
  * We do this to avoid multiple clients listening on single serial port.
  */
-export default async function SingletonDevice(): Promise<Device> {
+export default async function SingletonDevice(transport: WebSerial.WebSerialTransport): Promise<Device> {
   if ((window as any).device === undefined) {
     const protoCollection = await createDefaultProtoCollection();
-    (window as any).device = new Device(protoCollection);
+    (window as any).device = new Device(protoCollection, transport);
   }
   return (window as any).device;
 }
