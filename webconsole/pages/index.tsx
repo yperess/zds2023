@@ -17,6 +17,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.scss';
 import Log from "../components/log";
 import Repl from "../components/repl";
+import TransportMode from "../components/transportMode";
 import Connect from "../components/connect";
 import BtnUploadDB from '../components/uploadDb';
 import {WebSerial, Device} from "pigweedjs";
@@ -24,8 +25,10 @@ import {useState} from 'react';
 type WebSerialTransport = WebSerial.WebSerialTransport
 
 const Home: NextPage = () => {
-  const [device, setDevice] = useState<WebSerialTransport | undefined>(undefined);
+  const [transport, setTransport] = useState<WebSerialTransport | undefined>(undefined);
+  const [device, setDevice] = useState<Device | undefined>(undefined);
   const [tokenDB, setTokenDB] = useState("");
+  const [mode, setMode] = useState("raw");
   return (
     <div className={styles.container}>
       <Head>
@@ -37,17 +40,19 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <div className={styles.toolbar}>
           <span className={styles.logo}><span>Pigweed</span> Web Console</span>
-          <Connect onConnection={(device) => {
+          <Connect onConnection={(transport, device) => {
+            setTransport(transport);
             setDevice(device);
           }} />
           <BtnUploadDB onUpload={(db) => {
             setTokenDB(db);
           }} />
+          <TransportMode currentMode={mode} onChange={mode => setMode(mode)} />
         </div>
 
         <div className={styles.grid}>
           <div>
-            <Log device={device} tokenDB={tokenDB}></Log>
+            <Log device={device} transport={transport} tokenDB={tokenDB} mode={mode} ></Log>
           </div>
           {/*<div>*/}
           {/*  <Repl device={undefined}></Repl>*/}
