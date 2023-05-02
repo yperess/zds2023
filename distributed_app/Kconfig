@@ -1,0 +1,16 @@
+# Copyright (c) 2023 Google LLC
+# SPDX-License-Identifier: Apache-2.0
+
+menu "Zephyr"
+source "Kconfig.zephyr"
+endmenu
+
+config TEST_ITERATIONS
+    int "Number of iterations to run each test"
+    default 1000
+
+config STREAM_BUFFER_SIZE
+    int "Number of bytes to allocated for the stream buffers"
+    default 128
+
+rsource "rpc/Kconfig"
