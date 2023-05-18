@@ -8,9 +8,25 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 #include <pw_log/log.h>
+#include <pw_system/init.h>
+#include <zephyr/logging/log_core.h>
+
+namespace pw::system {
+
+// This will run once after pw::system::Init() completes. This callback must
+// return or it will block the work queue.
+void UserAppInit() {
+  Z_LOG_PRINTK(/*_is_raw=*/0, "UserAppInit Pigweed is fun\n");
+  PW_LOG_INFO("Pigweed is fun!");
+}
+
+}  // namespace pw::system
 
 int main(void) {
-  while (true) {
+  int count = 0;
+  pw::system::Init();
+
+  while(true) {
     PW_LOG_DEBUG("Hello Pigweed DEBUG");
     PW_LOG_INFO("Hello Pigweed INFO");
     PW_LOG_WARN("Hello Pigweed WARN");
