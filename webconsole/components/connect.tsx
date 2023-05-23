@@ -30,10 +30,9 @@ export default function BtnConnect({onConnection}: LogProps) {
     return (<Alert severity="success">Connected!</Alert>);
   }
   return (<Button onClick={async () => {
-    const transport = new WebSerial.WebSerialTransport();
-    await transport.connect();
-    const device = await DeviceFactory(transport);
+    const device = await DeviceFactory();
+    await device.connect();
     setConnected(true);
-    onConnection(transport, device);
+    onConnection(device.transport, device);
   }} variant="contained">Connect</Button>)
 }
