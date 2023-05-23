@@ -22,10 +22,10 @@ import {WebSerial} from "pigweedjs";
  *
  * We do this to avoid multiple clients listening on single serial port.
  */
-export default async function SingletonDevice(transport: WebSerial.WebSerialTransport): Promise<Device> {
+export default async function SingletonDevice(): Promise<Device> {
   if ((window as any).device === undefined) {
     const protoCollection = await createDefaultProtoCollection();
-    (window as any).device = new Device(protoCollection, transport);
+    (window as any).device = new Device(protoCollection);
   }
   return (window as any).device;
 }
