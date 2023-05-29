@@ -15,6 +15,6 @@
 
 export async function createDefaultProtoCollection() {
   // @ts-ignore
-  const ProtoCollection = await import("pigweedjs/protos/collection.umd");
+  const ProtoCollection = await import("../protos/bundle");
   return new ProtoCollection.ProtoCollection();
 }
