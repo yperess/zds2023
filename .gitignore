@@ -8,4 +8,6 @@ modules/
 pigweed/
 zephyr/
 tools/
+node_modules/
+.env
 

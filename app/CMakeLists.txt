@@ -15,10 +15,10 @@ pw_proto_library(
     SOURCES proto/demo.proto
 )
 
-#zephyr_link_libraries(
-#    rpc_demo.protos.nanopb
-#    rpc_demo.protos.nanopb_rpc
-#)
+zephyr_link_libraries(
+    rpc_demo.protos.nanopb
+    rpc_demo.protos.nanopb_rpc
+)
 
 target_include_directories(app
   PRIVATE

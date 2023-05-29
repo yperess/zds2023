@@ -22,7 +22,34 @@ import Connect from "../components/connect";
 import BtnUploadDB from '../components/uploadDb';
 import {WebSerial, Device} from "pigweedjs";
 import {useState} from 'react';
+import {initializeApp} from "@firebase/app";
+import {Analytics, getAnalytics, logEvent} from "@firebase/analytics";
+import {RemoteConfig, getRemoteConfig, getValue, fetchAndActivate} from "@firebase/remote-config";
 type WebSerialTransport = WebSerial.WebSerialTransport
+
+
+const firebaseConfig = {
+  apiKey : process.env.API_KEY,
+  authDomain : process.env.AUTH_DOMAIN,
+  projectId : process.env.PROJECT_ID,
+  storageBucket : process.env.STORAGE_BUCKER,
+  messagingSenderId : process.env.MESSAGING_SENDER_ID,
+  appId : process.env.APP_ID,
+  measurementId : process.env.MEASUREMENT_ID
+};
+
+const firebase = initializeApp(firebaseConfig);
+let analytics: Analytics | undefined;
+let remoteConfig: RemoteConfig | undefined;
+if (typeof window !== 'undefined') {
+  analytics = getAnalytics(firebase);
+  remoteConfig = getRemoteConfig(firebase);
+  fetchAndActivate(remoteConfig).then(() => {
+    console.log("Fetched remote config");
+  }).catch((err) => {
+    console.log("Failed to fetch remote config: " + err);
+  });
+}
 
 const Home: NextPage = () => {
   const [transport, setTransport] = useState<WebSerialTransport | undefined>(undefined);
@@ -41,13 +68,28 @@ const Home: NextPage = () => {
         <div className={styles.toolbar}>
           <span className={styles.logo}><span>Pigweed</span> Web Console</span>
           <Connect onConnection={(transport, device) => {
+            if (remoteConfig) {
+              const value = getValue(remoteConfig, 'number_value').asNumber();
+              console.log("Remove value: " + value);
+            }
             setTransport(transport);
             setDevice(device);
-          }} />
+            if (analytics !== undefined) {
+              logEvent(analytics, "device_connected");
+            }
+          }} currentMode={mode}/>
           <BtnUploadDB onUpload={(db) => {
+            if (analytics !== undefined) {
+              logEvent(analytics, "token_db_uploaded");
+            }
             setTokenDB(db);
           }} />
-          <TransportMode currentMode={mode} onChange={mode => setMode(mode)} />
+          <TransportMode currentMode={mode} onChange={(mode) => {
+            if (analytics !== undefined) {
+              logEvent(analytics, "transport_mode", {"mode": mode});
+            }
+            setMode(mode);
+          }} />
         </div>
 
         <div className={styles.grid}>
@@ -63,4 +105,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default Home;

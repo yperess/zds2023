@@ -16,6 +16,7 @@ import '../styles/globals.css'
 import type {AppProps} from 'next/app'
 import {ThemeProvider, createTheme} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import CookieConsent from "react-cookie-consent";
 
 const darkTheme = createTheme({
   palette: {
@@ -28,6 +29,7 @@ function MyApp({Component, pageProps}: AppProps) {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Component {...pageProps} />
+      <CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>
     </ThemeProvider>
   )
 }

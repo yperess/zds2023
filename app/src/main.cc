@@ -3,7 +3,9 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 #include <pw_log/log.h>
+#ifdef CONFIG_PIGWEED_LOG_TOKENIZED_RPC
 #include <pw_system/init.h>
+#endif
 #include <zephyr/logging/log_core.h>
 
 namespace pw::system {
@@ -18,8 +20,10 @@ void UserAppInit() {
 }  // namespace pw::system
 
 int main(void) {
-  int count = 0;
+//  int count = 0;
+#ifdef CONFIG_PIGWEED_LOG_TOKENIZED_RPC
   pw::system::Init();
+#endif
 
   while(true) {
     PW_LOG_DEBUG("Hello Pigweed DEBUG");

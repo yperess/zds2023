@@ -32,21 +32,19 @@ export default class StreamParser {
   constructor(private logHandler: (str: string) => void) { }
 
   read(bytes: Uint8Array) {
+    console.log('processing: ' + bytes);
     bytes.forEach(byte => {
       const char = new TextDecoder().decode(new Uint8Array([byte]))[0];
       if (char === '$') {
+        console.log('Entered frame');
+        if (this.isInsideMessage) {
+          this.logHandler(this.buffer);
+          this.buffer = '$';
+        }
         this.isInsideMessage = true;
-      }
-
-      if (this.isInsideMessage && BASE64CHARS.indexOf(char) !== -1) {
+      } else if (this.isInsideMessage && BASE64CHARS.indexOf(char) !== -1) {
         this.buffer += char;
-      }
-      else if (this.isInsideMessage) {
-        this.isInsideMessage = false;
-        this.logHandler(this.buffer);
-        this.buffer = '';
-      }
-      else {
+      } else {
         this.logHandler(char);
       }
     })

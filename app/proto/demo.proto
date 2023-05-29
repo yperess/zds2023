@@ -2,30 +2,20 @@
 // SPDX-License-Identifier: Apache-2.0
 syntax = "proto3";
 
-package rpc_demo;
-
-enum Status {
-  SUCCESS = 0;
-  FAIL = 1;
-}
-
-message SetValueRequest {
-  uint32 value = 1;
-}
-
-message SetValueResponse {
-  Status status = 1;
-}
-
-message GetValueRequest {
-}
+package rpc_demo.remoteconfig;
 
 message GetValueResponse {
-  Status status = 1;
-  uint32 value = 2;
 }
 
-service DemoService {
-  rpc SetValue(SetValueRequest) returns (SetValueResponse) {}
-  rpc GetValue(GetValueRequest) returns (GetValueResponse) {}
+message GetValueUpdate {
+  string key = 1;
+  oneof value {
+    string string_value = 2;
+    int64 int_value = 3;
+    bool bool_value = 4;
+  }
+}
+
+service RemoteConfig {
+  rpc GetValue(stream GetValueUpdate) returns (stream GetValueResponse) {}
 }

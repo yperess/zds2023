@@ -83,7 +83,8 @@ export default function Log({device, transport, tokenDB, mode}: LogProps) {
 
   const processFrame = (decodedFrame: string) => {
     if (detokenizer) {
-      const detokenized = detokenizer.detokenizeBase64String(decodedFrame);
+      console.log('trying to detokenize');
+      const detokenized = detokenizer.detokenizeBase64String(decodedFrame, 0);
       setLogs(oldLogs => [...oldLogs, parseLogMsg(detokenized)]);
     } else {
       setLogs(oldLogs => [...oldLogs, parseLogMsg(decodedFrame)]);
@@ -96,6 +97,7 @@ export default function Log({device, transport, tokenDB, mode}: LogProps) {
   const processFrameUint8 = (frame: Uint8Array) => {
     if (detokenizer) {
       const detokenized = detokenizer.detokenizeUint8Array(frame);
+      console.log('frame: "' + frame + '", detokenized: "' + detokenized + '"');
       setLogs(oldLogs => [...oldLogs, parseLogMsg(detokenized)]);
     }
     else {
@@ -108,28 +110,32 @@ export default function Log({device, transport, tokenDB, mode}: LogProps) {
   }
 
   useEffect(() => {
-    if (device && transport) {
-      let cleanupFn: () => void;
+    let cleanupFn: () => void;
+    if (mode === "rpc" && device) {
+        listenToDefaultLogService(device, processFrameUint8).then((unsub) => cleanupFn = unsub);
+    } else if (transport) {
+      console.log('mode = "' + mode + '"');
       if (mode === "raw") {
+        console.log("Registering raw parser, transport=" + transport);
         const subscription = transport.chunks.subscribe((item: Uint8Array) => {
           setLogs(oldLogs =>
             [...oldLogs, parseLogMsg(Buffer.from(item.buffer).toString())]);
         });
         cleanupFn = () => subscription.unsubscribe();
-      }
-      else if (mode === "stream") {
+      } else if (mode === "stream") {
+        console.log("Registering stream parser, transport=" + transport);
         let streamParser = new StreamParser((str) => processFrame(str));
         const subscription = transport.chunks.subscribe((item: Uint8Array) => {
           streamParser.read(item);
         });
         cleanupFn = () => subscription.unsubscribe();
       }
-      else if (mode === "rpc") {
-        listenToDefaultLogService(device, processFrameUint8).then((unsub) => cleanupFn = unsub);
-      }
 
       return () => {
-        if (cleanupFn) cleanupFn();
+        if (cleanupFn) {
+          console.log("Calling cleanup function");
+          cleanupFn();
+        }
       }
     }
   }, [device, transport, detokenizer, mode]);
