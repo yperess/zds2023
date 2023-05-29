@@ -10,9 +10,11 @@ enable_language(C CXX)
 
 # Define the proto library
 include(${ZEPHYR_PIGWEED_MODULE_DIR}/pw_protobuf_compiler/proto.cmake)
-pw_proto_library(
-    rpc_demo.protos
-    SOURCES proto/demo.proto
+pw_proto_library(rpc_demo.protos
+  SOURCES
+    proto/demo.proto
+  INPUTS
+    proto/demo.options
 )
 
 zephyr_link_libraries(
@@ -29,6 +31,9 @@ target_sources(app
   PRIVATE
     src/main.cc
 )
+
+add_subdirectory(remoteconfig)
+target_link_libraries(app PRIVATE pw_system.hdlc_rpc_server remoteconfig)
 
 # Add custom logic to generate database.bin
 # The application expects it to be in the binary dir.
@@ -50,6 +55,7 @@ add_custom_command(
 )
 add_dependencies(${logical_target_for_zephyr_elf} database_binary)
 
+target_include_directories(app PRIVATE remoteconfig)
 #add_subdirectory(service)
 #add_subdirectory_ifdef(CONFIG_LOCALITY_LPC local)
 #add_subdirectory_ifdef(CONFIG_LOCALITY_RPC remote)

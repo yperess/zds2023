@@ -5,6 +5,8 @@
 #include <pw_log/log.h>
 #ifdef CONFIG_PIGWEED_LOG_TOKENIZED_RPC
 #include <pw_system/init.h>
+#include <pw_system/rpc_server.h>
+#include "remoteconfig.hh"
 #endif
 #include <zephyr/logging/log_core.h>
 
@@ -23,6 +25,8 @@ int main(void) {
 //  int count = 0;
 #ifdef CONFIG_PIGWEED_LOG_TOKENIZED_RPC
   pw::system::Init();
+  rpc_demo::remoteconfig::RemoteConfigService remoteConfigService;
+  pw::system::GetRpcServer().RegisterService(remoteConfigService);
 #endif
 
   while(true) {

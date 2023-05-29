@@ -4,18 +4,14 @@ syntax = "proto3";
 
 package rpc_demo.remoteconfig;
 
-message GetValueResponse {
+message SetValueResponse {
 }
 
-message GetValueUpdate {
+message SetValueRequest {
   string key = 1;
-  oneof value {
-    string string_value = 2;
-    int64 int_value = 3;
-    bool bool_value = 4;
-  }
+  int64 int_value = 2;
 }
 
 service RemoteConfig {
-  rpc GetValue(stream GetValueUpdate) returns (stream GetValueResponse) {}
+  rpc SetValue(SetValueRequest) returns (SetValueResponse) {}
 }
