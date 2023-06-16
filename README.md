@@ -1,6 +1,17 @@
-## Getting started Zephyr
+# zds2023
 
-On first setup:
+A sample application that demonstrates how to use [Pigweed](https://pigweed.dev)
+in a [Zephyr](https://zephyrproject.org/) project.
+
+## Assumptions & prerequisites
+
+* This application was developed on a Linux host. It should work on Windows and
+  macOS, but this hasn't been personally verified.
+
+## Getting started
+
+### Initial, one-time setup
+
 ```bash
 $ python3 -m venv .venv
 $ source .venv/bin/activate
@@ -11,7 +22,11 @@ $ pip install -r zephyr/scripts/requirements.txt
 $ . pigweed/bootstrap.sh 
 ```
 
-On following work days:
+### Activating the development environment
+
+After the initial one-time setup, run these steps
+to re-activate your development environment:
+
 ```bash
 $ source .venv/bin/activate
 $ . pigweed/activate.sh
@@ -19,7 +34,8 @@ $ . pigweed/activate.sh
 
 ## Building the app
 
-native_posix:
+### native_posix
+
 ```bash
 (.venv) $ west build -p -b native_posix app
 (.venv) $ ./build/zephyr/zephyr.exe
@@ -27,7 +43,8 @@ native_posix:
 [00:00:00.000,000] <inf> pigweed: APP Hello
 ```
 
-TDK robokit1:
+### TDK robokit1
+
 ```bash
 (.venv) $ west build -p -b tdk_robokit1 app && west flash
 (.venv) $ pyserial-miniterm --raw /dev/ttyUSB0 112500
@@ -38,13 +55,15 @@ TDK robokit1:
 [00:00:00.000,000] <inf> pigweed: APP Hello
 ```
 
-## Web server
+## Setting up the web server
 
-Install node:
+### 1. Install Node
+
 1. Install `nvm` (https://github.com/nvm-sh/nvm)
 2. Install `nodejs`: `nvm install node`)
 
-Run the server:
+### 2. Run the server
+
 ```bash
 $ cd webconsole
 $ npm install --force
