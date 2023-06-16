@@ -43,6 +43,12 @@ $ . pigweed/activate.sh
 [00:00:00.000,000] <inf> pigweed: APP Hello
 ```
 
+#### Troubleshooting: `fatal error: asm/errno.h: No such file or directory`
+
+1. Check if `/usr/include/asm-generic/` exists.
+2. If yes, try creating a symlink:
+       sudo ln -s /usr/include/asm-generic/ /usr/include/asm
+
 ### TDK robokit1
 
 ```bash
@@ -69,3 +75,5 @@ $ cd webconsole
 $ npm install --force
 $ npm run dev
 ```
+
+
