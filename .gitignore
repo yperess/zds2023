@@ -1,0 +1,12 @@
+.idea
+.west
+bootloader/
+build/
+cmake-build-debug
+modules/
+pigweed/
+zephyr/
+tools/
+node_modules/
+.env
+
