@@ -34,6 +34,12 @@ $ . pigweed/activate.sh
 - [Firebase](samples/firebase/README.md)
 - [Microservices](samples/microservices/README.md)
 
+### Troubleshooting (native_posix): `fatal error: asm/errno.h: No such file or directory`
+
+1. Check if `/usr/include/asm-generic/` exists.
+2. If yes, try creating a symlink:
+       sudo ln -s /usr/include/asm-generic/ /usr/include/asm
+
 ## Setting up the web server
 
 ### 1. Install Node
