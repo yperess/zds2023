@@ -28,3 +28,18 @@ to re-activate your development environment:
 ```bash
 $ . pigweed/activate.sh
 ```
+
+## Setting up the web server
+
+### 1. Install Node
+
+1. Install `nvm` (https://github.com/nvm-sh/nvm)
+2. Install `nodejs`: `nvm install node`)
+
+### 2. Run the server
+
+```bash
+$ cd webconsole
+$ npm install --force
+$ npm run dev
+```
