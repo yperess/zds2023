@@ -26,6 +26,7 @@ import {initializeApp} from "@firebase/app";
 import {Analytics, getAnalytics, logEvent} from "@firebase/analytics";
 import {RemoteConfig, getRemoteConfig, getValue, fetchAndActivate} from "@firebase/remote-config";
 import {SetValueRequest, SetValueResponse} from "../protos/app/proto/demo_pb";
+
 type WebSerialTransport = WebSerial.WebSerialTransport
 
 
@@ -72,7 +73,7 @@ const Home: NextPage = () => {
             if (device && remoteConfig) {
               const value = getValue(remoteConfig, 'number_value').asNumber();
               console.log("Remove value: " + value);
-              const request = new SetValueRequest();
+              let request = new SetValueRequest();
               request.setKey('number_value');
               request.setIntValue(value);
               device.client.channel(1).methodStub('rpc_demo.remoteconfig.RemoteConfig.SetValue')

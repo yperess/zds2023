@@ -12,7 +12,6 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-
 export async function createDefaultProtoCollection() {
   // @ts-ignore
   const ProtoCollection = await import("../protos/bundle");

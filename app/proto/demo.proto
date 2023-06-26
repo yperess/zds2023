@@ -9,7 +9,11 @@ message SetValueResponse {
 
 message SetValueRequest {
   string key = 1;
-  int64 int_value = 2;
+  oneof value {
+    int64 int_value = 2;
+    bool bool_value = 3;
+    string string_value = 4;
+  }
 }
 
 service RemoteConfig {

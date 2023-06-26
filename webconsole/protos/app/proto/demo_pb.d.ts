@@ -23,9 +23,22 @@ export class SetValueRequest extends jspb.Message {
   getKey(): string;
   setKey(value: string): void;
 
+  hasIntValue(): boolean;
+  clearIntValue(): void;
   getIntValue(): number;
   setIntValue(value: number): void;
 
+  hasBoolValue(): boolean;
+  clearBoolValue(): void;
+  getBoolValue(): boolean;
+  setBoolValue(value: boolean): void;
+
+  hasStringValue(): boolean;
+  clearStringValue(): void;
+  getStringValue(): string;
+  setStringValue(value: string): void;
+
+  getValueCase(): SetValueRequest.ValueCase;
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SetValueRequest.AsObject;
   static toObject(includeInstance: boolean, msg: SetValueRequest): SetValueRequest.AsObject;
@@ -40,6 +53,15 @@ export namespace SetValueRequest {
   export type AsObject = {
     key: string,
     intValue: number,
+    boolValue: boolean,
+    stringValue: string,
+  }
+
+  export enum ValueCase {
+    VALUE_NOT_SET = 0,
+    INT_VALUE = 2,
+    BOOL_VALUE = 3,
+    STRING_VALUE = 4,
   }
 }
 

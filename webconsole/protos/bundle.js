@@ -54557,6 +54557,7 @@ var require_demo_pb = __commonJS({
     "object" === typeof exports && (exports.Map = jspb.Map, exports.Message = jspb.Message, exports.BinaryReader = jspb.BinaryReader, exports.BinaryWriter = jspb.BinaryWriter, exports.ExtensionFieldInfo = jspb.ExtensionFieldInfo, exports.ExtensionFieldBinaryInfo = jspb.ExtensionFieldBinaryInfo, exports.exportSymbol = goog.exportSymbol, exports.inherits = goog.inherits, exports.object = { extend: goog.object.extend }, exports.typeOf = goog.typeOf);
     var global = Function("return this")();
     goog.exportSymbol("proto.rpc_demo.remoteconfig.SetValueRequest", null, global);
+    goog.exportSymbol("proto.rpc_demo.remoteconfig.SetValueRequest.ValueCase", null, global);
     goog.exportSymbol("proto.rpc_demo.remoteconfig.SetValueResponse", null, global);
     proto.rpc_demo.remoteconfig.SetValueResponse = function(opt_data) {
       jspb.Message.initialize(this, opt_data, 0, -1, null, null);
@@ -54566,7 +54567,7 @@ var require_demo_pb = __commonJS({
       proto.rpc_demo.remoteconfig.SetValueResponse.displayName = "proto.rpc_demo.remoteconfig.SetValueResponse";
     }
     proto.rpc_demo.remoteconfig.SetValueRequest = function(opt_data) {
-      jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+      jspb.Message.initialize(this, opt_data, 0, -1, null, proto.rpc_demo.remoteconfig.SetValueRequest.oneofGroups_);
     };
     goog.inherits(proto.rpc_demo.remoteconfig.SetValueRequest, jspb.Message);
     if (goog.DEBUG && !COMPILED) {
@@ -54611,6 +54612,19 @@ var require_demo_pb = __commonJS({
     proto.rpc_demo.remoteconfig.SetValueResponse.serializeBinaryToWriter = function(message, writer) {
       var f2 = void 0;
     };
+    proto.rpc_demo.remoteconfig.SetValueRequest.oneofGroups_ = [[2, 3, 4]];
+    proto.rpc_demo.remoteconfig.SetValueRequest.ValueCase = {
+      VALUE_NOT_SET: 0,
+      INT_VALUE: 2,
+      BOOL_VALUE: 3,
+      STRING_VALUE: 4
+    };
+    proto.rpc_demo.remoteconfig.SetValueRequest.prototype.getValueCase = function() {
+      return (
+        /** @type {proto.rpc_demo.remoteconfig.SetValueRequest.ValueCase} */
+        jspb.Message.computeOneofCase(this, proto.rpc_demo.remoteconfig.SetValueRequest.oneofGroups_[0])
+      );
+    };
     if (jspb.Message.GENERATE_TO_OBJECT) {
       proto.rpc_demo.remoteconfig.SetValueRequest.prototype.toObject = function(opt_includeInstance) {
         return proto.rpc_demo.remoteconfig.SetValueRequest.toObject(opt_includeInstance, this);
@@ -54618,7 +54632,9 @@ var require_demo_pb = __commonJS({
       proto.rpc_demo.remoteconfig.SetValueRequest.toObject = function(includeInstance, msg) {
         var f2, obj = {
           key: jspb.Message.getFieldWithDefault(msg, 1, ""),
-          intValue: jspb.Message.getFieldWithDefault(msg, 2, 0)
+          intValue: jspb.Message.getFieldWithDefault(msg, 2, 0),
+          boolValue: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
+          stringValue: jspb.Message.getFieldWithDefault(msg, 4, "")
         };
         if (includeInstance) {
           obj.$jspbMessageInstance = msg;
@@ -54652,6 +54668,20 @@ var require_demo_pb = __commonJS({
             );
             msg.setIntValue(value);
             break;
+          case 3:
+            var value = (
+              /** @type {boolean} */
+              reader.readBool()
+            );
+            msg.setBoolValue(value);
+            break;
+          case 4:
+            var value = (
+              /** @type {string} */
+              reader.readString()
+            );
+            msg.setStringValue(value);
+            break;
           default:
             reader.skipField();
             break;
@@ -54673,10 +54703,27 @@ var require_demo_pb = __commonJS({
           f2
         );
       }
-      f2 = message.getIntValue();
-      if (f2 !== 0) {
+      f2 = /** @type {number} */
+      jspb.Message.getField(message, 2);
+      if (f2 != null) {
         writer.writeInt64(
           2,
+          f2
+        );
+      }
+      f2 = /** @type {boolean} */
+      jspb.Message.getField(message, 3);
+      if (f2 != null) {
+        writer.writeBool(
+          3,
+          f2
+        );
+      }
+      f2 = /** @type {string} */
+      jspb.Message.getField(message, 4);
+      if (f2 != null) {
+        writer.writeString(
+          4,
           f2
         );
       }
@@ -54697,7 +54744,43 @@ var require_demo_pb = __commonJS({
       );
     };
     proto.rpc_demo.remoteconfig.SetValueRequest.prototype.setIntValue = function(value) {
-      return jspb.Message.setProto3IntField(this, 2, value);
+      return jspb.Message.setOneofField(this, 2, proto.rpc_demo.remoteconfig.SetValueRequest.oneofGroups_[0], value);
+    };
+    proto.rpc_demo.remoteconfig.SetValueRequest.prototype.clearIntValue = function() {
+      return jspb.Message.setOneofField(this, 2, proto.rpc_demo.remoteconfig.SetValueRequest.oneofGroups_[0], void 0);
+    };
+    proto.rpc_demo.remoteconfig.SetValueRequest.prototype.hasIntValue = function() {
+      return jspb.Message.getField(this, 2) != null;
+    };
+    proto.rpc_demo.remoteconfig.SetValueRequest.prototype.getBoolValue = function() {
+      return (
+        /** @type {boolean} */
+        jspb.Message.getBooleanFieldWithDefault(this, 3, false)
+      );
+    };
+    proto.rpc_demo.remoteconfig.SetValueRequest.prototype.setBoolValue = function(value) {
+      return jspb.Message.setOneofField(this, 3, proto.rpc_demo.remoteconfig.SetValueRequest.oneofGroups_[0], value);
+    };
+    proto.rpc_demo.remoteconfig.SetValueRequest.prototype.clearBoolValue = function() {
+      return jspb.Message.setOneofField(this, 3, proto.rpc_demo.remoteconfig.SetValueRequest.oneofGroups_[0], void 0);
+    };
+    proto.rpc_demo.remoteconfig.SetValueRequest.prototype.hasBoolValue = function() {
+      return jspb.Message.getField(this, 3) != null;
+    };
+    proto.rpc_demo.remoteconfig.SetValueRequest.prototype.getStringValue = function() {
+      return (
+        /** @type {string} */
+        jspb.Message.getFieldWithDefault(this, 4, "")
+      );
+    };
+    proto.rpc_demo.remoteconfig.SetValueRequest.prototype.setStringValue = function(value) {
+      return jspb.Message.setOneofField(this, 4, proto.rpc_demo.remoteconfig.SetValueRequest.oneofGroups_[0], value);
+    };
+    proto.rpc_demo.remoteconfig.SetValueRequest.prototype.clearStringValue = function() {
+      return jspb.Message.setOneofField(this, 4, proto.rpc_demo.remoteconfig.SetValueRequest.oneofGroups_[0], void 0);
+    };
+    proto.rpc_demo.remoteconfig.SetValueRequest.prototype.hasStringValue = function() {
+      return jspb.Message.getField(this, 4) != null;
     };
     goog.object.extend(exports, proto.rpc_demo.remoteconfig);
   }
@@ -66541,7 +66624,7 @@ var MODULE_MAP = new ModuleMap([
   ["pigweed/pw_rpc/internal/packet.proto", proto_4],
   ["app/proto/demo.proto", proto_5]
 ]);
-var DESCRIPTOR_BASE64_BINARY = "CqsBChlwaWd3ZWVkL3B3X3JwYy9lY2hvLnByb3RvEgZwdy5ycGMiHwoLRWNob01lc3NhZ2USEAoDbXNnGAEgASgJUgNtc2cyQQoLRWNob1NlcnZpY2USMgoERWNobxITLnB3LnJwYy5FY2hvTWVzc2FnZRoTLnB3LnJwYy5FY2hvTWVzc2FnZSIAQhoKGGRldi5waWd3ZWVkLnB3X3JwYy5wcm90b2IGcHJvdG8zCooDCjNwaWd3ZWVkL3B3X3Byb3RvYnVmL3B3X3Byb3RvYnVmX3Byb3Rvcy9zdGF0dXMucHJvdG8SC3B3LnByb3RvYnVmKr0CCgpTdGF0dXNDb2RlEgYKAk9LEAASDQoJQ0FOQ0VMTEVEEAESCwoHVU5LTk9XThACEhQKEElOVkFMSURfQVJHVU1FTlQQAxIVChFERUFETElORV9FWENFRURFRBAEEg0KCU5PVF9GT1VORBAFEhIKDkFMUkVBRFlfRVhJU1RTEAYSFQoRUEVSTUlTU0lPTl9ERU5JRUQQBxIWChJSRVNPVVJDRV9FWEhBVVNURUQQCBIXChNGQUlMRURfUFJFQ09ORElUSU9OEAkSCwoHQUJPUlRFRBAKEhAKDE9VVF9PRl9SQU5HRRALEhEKDVVOSU1QTEVNRU5URUQQDBIMCghJTlRFUk5BTBANEg8KC1VOQVZBSUxBQkxFEA4SDQoJREFUQV9MT1NTEA8SEwoPVU5BVVRIRU5USUNBVEVEEBBiBnByb3RvMwpTCjNwaWd3ZWVkL3B3X3Byb3RvYnVmL3B3X3Byb3RvYnVmX3Byb3Rvcy9jb21tb24ucHJvdG8SC3B3LnByb3RvYnVmIgcKBUVtcHR5YgZwcm90bzMK3AEKInBpZ3dlZWQvcHdfdG9rZW5pemVyL29wdGlvbnMucHJvdG8SDHB3LnRva2VuaXplchogZ29vZ2xlL3Byb3RvYnVmL2Rlc2NyaXB0b3IucHJvdG8qKQoMVG9rZW5pemF0aW9uEhkKFVRPS0VOSVpBVElPTl9PUFRJT05BTBAAOlMKBmZvcm1hdBIdLmdvb2dsZS5wcm90b2J1Zi5GaWVsZE9wdGlvbnMY8OUEIAEoDjIaLnB3LnRva2VuaXplci5Ub2tlbml6YXRpb25SBmZvcm1hdGIGcHJvdG8zCuIDCiRwaWd3ZWVkL3B3X3JwYy9pbnRlcm5hbC9wYWNrZXQucHJvdG8SD3B3LnJwYy5pbnRlcm5hbCLiAQoJUnBjUGFja2V0Ei8KBHR5cGUYASABKA4yGy5wdy5ycGMuaW50ZXJuYWwuUGFja2V0VHlwZVIEdHlwZRIdCgpjaGFubmVsX2lkGAIgASgNUgljaGFubmVsSWQSHQoKc2VydmljZV9pZBgDIAEoB1IJc2VydmljZUlkEhsKCW1ldGhvZF9pZBgEIAEoB1IIbWV0aG9kSWQSGAoHcGF5bG9hZBgFIAEoDFIHcGF5bG9hZBIWCgZzdGF0dXMYBiABKA1SBnN0YXR1cxIXCgdjYWxsX2lkGAcgASgNUgZjYWxsSWQqnAEKClBhY2tldFR5cGUSCwoHUkVRVUVTVBAAEhEKDUNMSUVOVF9TVFJFQU0QAhIQCgxDTElFTlRfRVJST1IQBBIdChlDTElFTlRfUkVRVUVTVF9DT01QTEVUSU9OEAgSDAoIUkVTUE9OU0UQARIQCgxTRVJWRVJfRVJST1IQBRIRCg1TRVJWRVJfU1RSRUFNEAciBAgDEAMiBAgGEAZCHQobZGV2LnBpZ3dlZWQucHdfcnBjLmludGVybmFsYgZwcm90bzMK+gEKFGFwcC9wcm90by9kZW1vLnByb3RvEhVycGNfZGVtby5yZW1vdGVjb25maWciEgoQU2V0VmFsdWVSZXNwb25zZSJACg9TZXRWYWx1ZVJlcXVlc3QSEAoDa2V5GAEgASgJUgNrZXkSGwoJaW50X3ZhbHVlGAIgASgDUghpbnRWYWx1ZTJtCgxSZW1vdGVDb25maWcSXQoIU2V0VmFsdWUSJi5ycGNfZGVtby5yZW1vdGVjb25maWcuU2V0VmFsdWVSZXF1ZXN0GicucnBjX2RlbW8ucmVtb3RlY29uZmlnLlNldFZhbHVlUmVzcG9uc2UiAGIGcHJvdG8z";
+var DESCRIPTOR_BASE64_BINARY = "CqsBChlwaWd3ZWVkL3B3X3JwYy9lY2hvLnByb3RvEgZwdy5ycGMiHwoLRWNob01lc3NhZ2USEAoDbXNnGAEgASgJUgNtc2cyQQoLRWNob1NlcnZpY2USMgoERWNobxITLnB3LnJwYy5FY2hvTWVzc2FnZRoTLnB3LnJwYy5FY2hvTWVzc2FnZSIAQhoKGGRldi5waWd3ZWVkLnB3X3JwYy5wcm90b2IGcHJvdG8zCooDCjNwaWd3ZWVkL3B3X3Byb3RvYnVmL3B3X3Byb3RvYnVmX3Byb3Rvcy9zdGF0dXMucHJvdG8SC3B3LnByb3RvYnVmKr0CCgpTdGF0dXNDb2RlEgYKAk9LEAASDQoJQ0FOQ0VMTEVEEAESCwoHVU5LTk9XThACEhQKEElOVkFMSURfQVJHVU1FTlQQAxIVChFERUFETElORV9FWENFRURFRBAEEg0KCU5PVF9GT1VORBAFEhIKDkFMUkVBRFlfRVhJU1RTEAYSFQoRUEVSTUlTU0lPTl9ERU5JRUQQBxIWChJSRVNPVVJDRV9FWEhBVVNURUQQCBIXChNGQUlMRURfUFJFQ09ORElUSU9OEAkSCwoHQUJPUlRFRBAKEhAKDE9VVF9PRl9SQU5HRRALEhEKDVVOSU1QTEVNRU5URUQQDBIMCghJTlRFUk5BTBANEg8KC1VOQVZBSUxBQkxFEA4SDQoJREFUQV9MT1NTEA8SEwoPVU5BVVRIRU5USUNBVEVEEBBiBnByb3RvMwpTCjNwaWd3ZWVkL3B3X3Byb3RvYnVmL3B3X3Byb3RvYnVmX3Byb3Rvcy9jb21tb24ucHJvdG8SC3B3LnByb3RvYnVmIgcKBUVtcHR5YgZwcm90bzMK3AEKInBpZ3dlZWQvcHdfdG9rZW5pemVyL29wdGlvbnMucHJvdG8SDHB3LnRva2VuaXplchogZ29vZ2xlL3Byb3RvYnVmL2Rlc2NyaXB0b3IucHJvdG8qKQoMVG9rZW5pemF0aW9uEhkKFVRPS0VOSVpBVElPTl9PUFRJT05BTBAAOlMKBmZvcm1hdBIdLmdvb2dsZS5wcm90b2J1Zi5GaWVsZE9wdGlvbnMY8OUEIAEoDjIaLnB3LnRva2VuaXplci5Ub2tlbml6YXRpb25SBmZvcm1hdGIGcHJvdG8zCuIDCiRwaWd3ZWVkL3B3X3JwYy9pbnRlcm5hbC9wYWNrZXQucHJvdG8SD3B3LnJwYy5pbnRlcm5hbCLiAQoJUnBjUGFja2V0Ei8KBHR5cGUYASABKA4yGy5wdy5ycGMuaW50ZXJuYWwuUGFja2V0VHlwZVIEdHlwZRIdCgpjaGFubmVsX2lkGAIgASgNUgljaGFubmVsSWQSHQoKc2VydmljZV9pZBgDIAEoB1IJc2VydmljZUlkEhsKCW1ldGhvZF9pZBgEIAEoB1IIbWV0aG9kSWQSGAoHcGF5bG9hZBgFIAEoDFIHcGF5bG9hZBIWCgZzdGF0dXMYBiABKA1SBnN0YXR1cxIXCgdjYWxsX2lkGAcgASgNUgZjYWxsSWQqnAEKClBhY2tldFR5cGUSCwoHUkVRVUVTVBAAEhEKDUNMSUVOVF9TVFJFQU0QAhIQCgxDTElFTlRfRVJST1IQBBIdChlDTElFTlRfUkVRVUVTVF9DT01QTEVUSU9OEAgSDAoIUkVTUE9OU0UQARIQCgxTRVJWRVJfRVJST1IQBRIRCg1TRVJWRVJfU1RSRUFNEAciBAgDEAMiBAgGEAZCHQobZGV2LnBpZ3dlZWQucHdfcnBjLmludGVybmFsYgZwcm90bzMKzAIKFGFwcC9wcm90by9kZW1vLnByb3RvEhVycGNfZGVtby5yZW1vdGVjb25maWciEgoQU2V0VmFsdWVSZXNwb25zZSKRAQoPU2V0VmFsdWVSZXF1ZXN0EhAKA2tleRgBIAEoCVIDa2V5Eh0KCWludF92YWx1ZRgCIAEoA0gAUghpbnRWYWx1ZRIfCgpib29sX3ZhbHVlGAMgASgISABSCWJvb2xWYWx1ZRIjCgxzdHJpbmdfdmFsdWUYBCABKAlIAFILc3RyaW5nVmFsdWVCBwoFdmFsdWUybQoMUmVtb3RlQ29uZmlnEl0KCFNldFZhbHVlEiYucnBjX2RlbW8ucmVtb3RlY29uZmlnLlNldFZhbHVlUmVxdWVzdBonLnJwY19kZW1vLnJlbW90ZWNvbmZpZy5TZXRWYWx1ZVJlc3BvbnNlIgBiBnByb3RvMw==";
 var ProtoCollection = class extends ProtoCollection$1 {
   constructor() {
     const fileDescriptorSet = descriptor_pb.FileDescriptorSet.deserializeBinary(toByteArray_1(DESCRIPTOR_BASE64_BINARY));

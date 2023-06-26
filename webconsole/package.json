@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "proto": "cd .. && pw_protobuf_compiler -p pigweed/pw_rpc/echo.proto -p pigweed/pw_protobuf/pw_protobuf_protos/status.proto -p pigweed/pw_protobuf/pw_protobuf_protos/common.proto -p pigweed/pw_tokenizer/options.proto -p pigweed/pw_rpc/internal/packet.proto -p app/proto/demo.proto --out webconsole/protos && esbuild webconsole/protos/collection.js --bundle --sourcemap --format=esm --outfile=webconsole/protos/bundle.js",
+    "app-proto": "cd .. && esbuild webconsole/protos/app/proto/demo_pb.js --format=esm --outfile=webconsole/protos/demobundle.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

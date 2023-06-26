@@ -14,6 +14,6 @@ using rpc_demo::remoteconfig::RemoteConfigService;
 
 ::pw::Status RemoteConfigService::SetValue(const ::rpc_demo_remoteconfig_SetValueRequest& request,
                                            ::rpc_demo_remoteconfig_SetValueResponse& response) {
-  LOG_INF("Got new remote config '%s'=%" PRIi64, request.key, request.int_value);
+  LOG_INF("Got new remote config '%s'=%" PRIi64, request.key, request.value.int_value);
   return ::pw::OkStatus();
 }
