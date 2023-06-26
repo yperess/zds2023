@@ -1,0 +1,34 @@
+/*
+ * Copyright (c) 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+syntax = "proto3";
+
+package app_rpc;
+
+message SetValueRequest {
+  int32 value = 1;
+}
+
+message SetValueResponse {
+  bool success = 1;
+}
+
+message GetValueRequest {
+}
+
+message GetValueResponse {
+  enum SomeType {
+    TYPE0 = 0;
+    TYPE1 = 1;
+    TYPE2 = 2;
+  }
+  int32 value = 1;
+  int32 field0 = 2;
+  SomeType type = 3;
+}
+
+service DemoService {
+  rpc SetValue(SetValueRequest) returns (SetValueResponse) {}
+  rpc GetValue(GetValueRequest) returns (GetValueResponse) {}
+}

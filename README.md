@@ -29,6 +29,10 @@ to re-activate your development environment:
 $ . pigweed/activate.sh
 ```
 
+## Samples
+
+- [Microservices](samples/microservices/README.md)
+
 ## Setting up the web server
 
 ### 1. Install Node

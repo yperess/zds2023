@@ -1,0 +1,13 @@
+# Copyright (c) 2023 Google LLC
+# SPDX-License-Identifier: Apache-2.0
+
+choice RPC_TYPE
+    prompt "RPC type"
+
+config RPC_TYPE_NANOPB
+    bool "Uses nanopb to generate the RPC type"
+
+config RPC_TYPE_RAW
+    bool "Uses raw byte spans to generate the RPC type"
+
+endchoice
