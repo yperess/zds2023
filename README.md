@@ -31,6 +31,7 @@ $ . pigweed/activate.sh
 
 ## Samples
 
+- [Firebase](samples/firebase/README.md)
 - [Microservices](samples/microservices/README.md)
 
 ## Setting up the web server
